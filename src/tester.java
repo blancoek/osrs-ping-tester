@@ -1,10 +1,14 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
-public class tester {
-	private static List<world> worldlist;
+public class Tester {
+	private static List<World> worldlist;
 	static {
 		for (int i=301; i<=538; i++) {
-			world currentworld = new world(i);
+			World currentworld = new World(i);
 			worldlist.add(currentworld);
 			// Set Regions
 			if (List.of(387,388,389,390,391,392,412,424,425,426,427,526,527,528,529,530,535,536).contains(i)) { // Australian Worlds
@@ -65,6 +69,44 @@ public class tester {
 			}
 		}
 		
+	}
+
+	private static String runSystemCommand(String command) {
+		String s = "";
+			try {
+				Process p = Runtime.getRuntime().exec(command);
+				BufferedReader inputStream = new BufferedReader(
+						new InputStreamReader(p.getInputStream()));
+				// reading output stream of the command
+				while ((s = inputStream.readLine()) != null) {
+					System.out.println(s);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return s;
+		}
+	
+	public List<World> Search(char worldtypes, byte regions, Boolean members) {
+		List<World> filteredWorlds = Collections.emptyList();
+		for (World world : worldlist) {
+			if (members==world.getMembers()) {
+				filteredWorlds.add(world);
+			}
+		}
+		/*if (regions) { // http://zetcode.com/java/filterlist/
+			Predicate<World> byRegion = world -> world.getRegion() == "AUS";
+		}*/
+		
+		return filteredWorlds;
+	}
+	
+	public int pingWorld(int number) {
+		int worldnum=number-300;
+		String IP = "oldschool"+worldnum+".runescape.com";
+		runSystemCommand("ping " + IP);
+		return 1;
 	}
 	
 }

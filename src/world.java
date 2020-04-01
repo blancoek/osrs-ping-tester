@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.List;
 
-public class world {
+public class World {
 	
 	public int number;
 	private Boolean members;
@@ -32,7 +32,7 @@ public class world {
 		regions.add("US_W");
 	}
 	
-	public world(int number) {
+	public World(int number) {
 		this.number = number;
 		this.members = false;
 		this.worldtype = 0;
